@@ -65,3 +65,4 @@ Route::get("/job/getJobListDashboard", [JobController::class, "getJobListDashboa
 //mailer
 
 Route::post("/mailer/sendLoad", [MailController::class, "sendLoad"]);
+Route::post("/mailer/contact", [MailController::class, "contact"]);

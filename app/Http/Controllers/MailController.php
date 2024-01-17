@@ -110,4 +110,68 @@ class MailController extends Controller
         }
 
     }
+
+
+    public function contact(Request $request)
+    {
+        $message = "
+
+                <table style = 'border:1px solid black;'>
+<tbody>
+<tr >
+<td style = 'border:1px solid black; padding:5px;' >Name</td>
+<td style = 'border:1px solid black; padding:5px;' >{$request->name}</td>
+</tr>
+<tr>
+<td style = 'border:1px solid black; padding:5px;'>Email</td>
+<td style = 'border:1px solid black; padding:5px;'>{$request->email}</td>
+</tr>
+<tr>
+<td style = 'border:1px solid black; padding:5px;'>Subject</td>
+<td style = 'border:1px solid black; padding:5px;'>{$request->subject}</td>
+</tr>
+<tr>
+<td style = 'border:1px solid black; padding:5px;'>Message</td>
+<td style = 'border:1px solid black; padding:5px;'>{$request->message}</td>
+</tr>
+</tbody>
+</table>
+<!-- DivTable.com -->
+                ";
+
+        $mailer = new SmtpMailer(
+            host: 'smtp.zoho.in',
+            username: 'send.loads@petrocomlogistics.co.uk',
+            password: 'Sendloads@2989',
+            encryption: "tls",
+            port: 587
+        );
+
+        $mail = new Message();
+        $mail->setFrom('send.loads@petrocomlogistics.co.uk')
+            ->addTo('info@petrocomlogistics.co.uk')
+            ->setSubject('Enquiry Request')
+            ->setHtmlBody($message);
+
+
+        try {
+
+            $mailer->send($mail);
+            return response()->json([
+                "message" => "Sent Successfully",
+                "status" => 1
+            ]);
+
+        } catch (Exception $e) {
+
+            return response()->json([
+                "message" => "Something went wrong",
+                "error" => $e->getMessage(),
+                "status" => 0
+            ]);
+
+
+        }
+
+    }
 }
