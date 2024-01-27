@@ -14,7 +14,10 @@ class MailController extends Controller
     public function sendLoad(Request $request)
     {
 
-        $validation = true;
+        $validation = $request->validate([
+            "name" => "required",
+            "email" => "required | email"
+        ]);
 
 
         if ($validation) {
@@ -83,7 +86,7 @@ class MailController extends Controller
 
             $mail = new Message();
             $mail->setFrom('send.loads@petrocomlogistics.co.uk')
-                ->addTo('info@petrocomlogistics.co.uk')
+                ->addTo('jobs@petrocomlogistics.co.uk')
                 ->setSubject('Load Request')
                 ->setHtmlBody($message);
 
