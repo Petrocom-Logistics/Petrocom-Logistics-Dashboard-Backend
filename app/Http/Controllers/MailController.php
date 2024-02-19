@@ -68,6 +68,14 @@ class MailController extends Controller
 <td style = 'border:1px solid black; padding:5px;'>{$request->weight}</td>
 </tr>
 <tr>
+<td style = 'border:1px solid black; padding:5px;'>Weight</td>
+<td style = 'border:1px solid black; padding:5px;'>{$request->pickupDate}</td>
+</tr>
+<tr>
+<td style = 'border:1px solid black; padding:5px;'>Weight</td>
+<td style = 'border:1px solid black; padding:5px;'>{$request->pickupTime}</td>
+</tr>
+<tr>
 <td style = 'border:1px solid black; padding:5px;'>Message</td>
 <td style = 'border:1px solid black; padding:5px;'>{$request->message}</td>
 </tr>
