@@ -168,14 +168,14 @@ class JobController extends Controller
                 // file upload handling
                 $pod = $request->file("pod");
                 if ($pod) {
-                    $pod_filename = "pod_" . $request->job_id . "_" . $request->date . ".pdf";
+                    $pod_filename = "pod_" . $request->job_id . "_" . $request->date . date(DATE_RFC822) . ".pdf";
                     $pod_upload_location = "public/pod";
                     $pod_access_location = env("UPLOAD_LOCATION") . "pod/" . $pod_filename;
 
                 }
                 $invoice = $request->file("invoice");
                 if ($invoice) {
-                    $invoice_filename = "invoice_" . $request->client_id . "_" . $request->date . ".pdf";
+                    $invoice_filename = "invoice_" . $request->client_id . "_" . $request->date . date(DATE_RFC822) . ".pdf";
                     $invoice_upload_location = "public/invoice";
                     $invoice_access_location = env("UPLOAD_LOCATION") . "invoice/" . $invoice_filename;
                 }
