@@ -120,7 +120,7 @@ class ClientDetailController extends Controller
 
                 return response()->json([
                     "message" => "success",
-                    "data" => $clientListFinal,
+                    "data" => $clientList,
                     "status" => 1
                 ]);
             } else {
