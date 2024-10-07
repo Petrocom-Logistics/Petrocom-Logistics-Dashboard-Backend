@@ -14,6 +14,9 @@ return new class extends Migration {
             $table->id();
             $table->timestamps();
             $table->integer("job_id");
+            $table->string("inv_no");
+            $table->string("inv_date");
+            $table->json("data");
 
         });
     }

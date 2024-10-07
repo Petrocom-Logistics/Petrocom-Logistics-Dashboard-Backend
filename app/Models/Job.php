@@ -21,4 +21,6 @@ class Job extends Model
         'invoice' => 'array',
         'update' => 'array'
     ];
+
+
 }
