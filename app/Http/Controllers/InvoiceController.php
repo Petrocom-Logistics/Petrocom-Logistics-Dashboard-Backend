@@ -17,6 +17,8 @@ class InvoiceController extends Controller
             'job_id' => 'required',
             'inv_no' => 'required',
             'inv_date' => 'required',
+            'job_cost' => 'required',
+            'job_total' => 'required',
             'data' => 'required|array',
 
         ]);
@@ -26,6 +28,8 @@ class InvoiceController extends Controller
             'job_id' => $validatedData['job_id'],
             'inv_no' => $validatedData['inv_no'],
             'inv_date' => $validatedData['inv_date'],
+            'job_total' => $validatedData['inv_total'],
+            'job_cost' => $validatedData['job_cost'],
             'data' => $validatedData['data'],
         ]);
         // Update the related job record with the created invoice ID

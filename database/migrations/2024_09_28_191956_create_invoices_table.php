@@ -16,6 +16,9 @@ return new class extends Migration {
             $table->integer("job_id");
             $table->string("inv_no");
             $table->string("inv_date");
+            $table->string("job_cost");
+            $table->string("job_total");
+
             $table->json("data");
 
         });
