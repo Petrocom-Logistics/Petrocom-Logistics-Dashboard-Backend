@@ -17,6 +17,7 @@ class ClientDetailController extends Controller
                 "client_name" => "required",
                 "company_name" => "required",
                 "primary_email" => "required | email",
+                "address" => "required",
 
                 "phone" => "required",
 
@@ -36,6 +37,7 @@ class ClientDetailController extends Controller
 
                 $client->client_name = $request->client_name;
                 $client->company_name = $request->company_name;
+                $client->address = $request->address;
                 $client->primary_email = $request->primary_email;
                 $client->sec_email = $request->sec_email;
                 $client->phone = $request->phone;
@@ -82,6 +84,7 @@ class ClientDetailController extends Controller
 
         $client->client_name = $request->client_name;
         $client->company_name = $request->company_name;
+        $client->address = $request->address;
         $client->primary_email = $request->primary_email;
         $client->sec_email = $request->sec_email;
         $client->phone = $request->phone;

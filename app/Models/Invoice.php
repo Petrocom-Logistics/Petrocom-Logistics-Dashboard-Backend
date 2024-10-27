@@ -15,8 +15,11 @@ class Invoice extends Model
 
     protected $fillable = [
         'job_id',    // Add job_id to the fillable array
-        'inv_no',
+        // 'inv_no',
         'inv_date',
+        'job_cost',
+        'job_total',
+        'vat',
         'data',
     ];
     public function job(): BelongsTo

@@ -64,6 +64,7 @@ Route::get("/job/getJobListDashboard", [JobController::class, "getJobListDashboa
 
 // Invoice
 Route::post("/invoice/create", [InvoiceController::class, "createInvoice"])->middleware("auth:sanctum")->middleware(SAdmin::class);
+Route::post("/invoice/update/{id}", [InvoiceController::class, "updateInvoice"])->middleware("auth:sanctum")->middleware(SAdmin::class);
 Route::get("/invoice/{id}", [InvoiceController::class, "getInvoiceById"])->middleware("auth:sanctum");
 
 

@@ -116,7 +116,7 @@ class JobController extends Controller
     public function getJobListDashboard(Request $request)
     {
         // $job = Job::with("client:id,approved")->select("*")->orderBy("id", "desc")->limit(3)->get()->getIterator()->getArrayCopy();
-        $job = Job::with("client:id,client_name,approved")->select("*")->latest()->take(10)->get()->getIterator()->getArrayCopy();
+        $job = Job::with("client:id,client_name,approved")->select("*")->latest()->take(50)->get()->getIterator()->getArrayCopy();
 
         if (count($job) > 0) {
             $new_job_array = array_filter($job, function ($data) {
@@ -352,38 +352,91 @@ class JobController extends Controller
 
     public function getJobByStatus(Request $request, string $status)
     {
-        $jobs = Job::with("client:id,approved")->whereRaw("status='$status' or invoice_status='$status'")->get()->getIterator()->getArrayCopy();
-        $new_job_array = array();
 
-        if (count($jobs) < 1) {
-            return response()->json([
-                "status" => 0,
-                "message" => "No data available"
-            ]);
+        if ($status == "Generated" || $status == "Not-Generated") {
+            $jobs = [];
+            if ($status == "Generated") {
+                $jobs = Job::with('client:id,approved')
+                    ->whereNotNull('invoice')
+                    ->orWhere('invoice_id', '!=', 0)
+                    ->get()->getIterator()->getArrayCopy(); // Keep as a collection
+            } else if ($status == "Not-Generated") {
+                $jobs = Job::with('client:id,approved')
+                    ->whereNull('invoice')
+                    ->where('invoice_id', '=', 0)
+                    ->get()->getIterator()->getArrayCopy(); // Keep as a collection
+            }
 
-        } else {
-            array_filter($jobs, function ($data) use (&$new_job_array) {
-                if ($data->client->approved != 0) {
-                    // echo $data;
-                    // array_push($new_job_array, $data);
-                    $new_job_array[] = $data;
-                    // return $data;
-                }
-            });
-            if (count($new_job_array) < 1) {
+
+            $new_job_array = array();
+
+            if (count($jobs) < 1) {
                 return response()->json([
                     "status" => 0,
-                    "message" => "No data Available for th selected filter",
-
+                    "message" => "No data available"
                 ]);
+
             } else {
+                array_filter($jobs, function ($data) use (&$new_job_array) {
+                    if ($data->client->approved != 0) {
+                        // echo $data;
+                        // array_push($new_job_array, $data);
+                        $new_job_array[] = $data;
+                        // return $data;
+                    }
+                });
+                if (count($new_job_array) < 1) {
+                    return response()->json([
+                        "status" => 0,
+                        "message" => "No data Available for th selected filter",
 
+                    ]);
+                } else {
+
+                    return response()->json([
+                        "status" => 1,
+                        "message" => "success",
+                        "data" => $new_job_array
+                    ]);
+
+                }
+            }
+        } else {
+
+
+            $jobs = Job::with("client:id,approved")->whereRaw("status='$status' or invoice_status='$status'")->get()->getIterator()->getArrayCopy();
+            $new_job_array = array();
+
+            if (count($jobs) < 1) {
                 return response()->json([
-                    "status" => 1,
-                    "message" => "success",
-                    "data" => $new_job_array
+                    "status" => 0,
+                    "message" => "No data available"
                 ]);
 
+            } else {
+                array_filter($jobs, function ($data) use (&$new_job_array) {
+                    if ($data->client->approved != 0) {
+                        // echo $data;
+                        // array_push($new_job_array, $data);
+                        $new_job_array[] = $data;
+                        // return $data;
+                    }
+                });
+                if (count($new_job_array) < 1) {
+                    return response()->json([
+                        "status" => 0,
+                        "message" => "No data Available for th selected filter",
+
+                    ]);
+                } else {
+
+                    return response()->json([
+                        "status" => 1,
+                        "message" => "success",
+                        "data" => $new_job_array
+                    ]);
+
+                }
             }
         }
     }
