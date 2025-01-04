@@ -21,7 +21,7 @@ class Invoice extends Model
         'job_total',
         'vat',
         'data',
-        'purchase_order'
+        'po'
     ];
     public function job(): BelongsTo
     {
