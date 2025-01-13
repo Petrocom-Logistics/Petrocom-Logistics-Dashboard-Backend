@@ -21,7 +21,8 @@ class InvoiceController extends Controller
             'job_total' => 'required',
             'vat' => 'required',
             'data' => 'required|array',
-            'po' => 'nullable|string|max:255'
+            'po' => 'nullable|string|max:255',
+            'job_hs' => 'nullable|string|max:255'
 
         ]);
 
@@ -35,6 +36,7 @@ class InvoiceController extends Controller
             'vat' => $validatedData['vat'],
             'data' => $validatedData['data'],
             'po' => $validatedData['po'] ?? null,
+            'job_hs' => $validatedData['job_hs'] ?? null,
         ]);
         // Update the related job record with the created invoice ID
         Job::where('id', $validatedData['job_id'])->update(['invoice_id' => $invoice->id]);
@@ -59,7 +61,8 @@ class InvoiceController extends Controller
             'job_total' => 'required',  // Ensure job_total is present
             'vat' => 'required',  // Ensure job_total is present
             'data' => 'required',  // Ensure data is present
-            'po' => 'nullable|string|max:255'
+            'po' => 'nullable|string|max:255',
+            'job_hs' => 'nullable|string|max:255'
         ]);
 
         try {
@@ -84,6 +87,7 @@ class InvoiceController extends Controller
                 'vat' => $validatedData['vat'],
                 'data' => $validatedData['data'],
                 'po' => $validatedData['po'] ?? null,
+                'job_hs' => $validatedData['job_hs'] ?? null,
             ]);
 
 
